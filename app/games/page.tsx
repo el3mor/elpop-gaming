@@ -4,7 +4,7 @@ import GridContainer from '../components/(default)/GridContainer'
 import gamesApis from '../api/gamesApis'
 import CustomPagination from '../components/CustomPagination'
 import Link from 'next/link'
-
+import Image from "next/image"
 interface Category {
   id: number,
   name: string,
@@ -75,10 +75,12 @@ const Page = () => {
                     className="bg-black/20 p-4 rounded-lg mt-4 relative hover:bg-black/70 duration-300 hover:shadow-lg hover:scale-105"
                   >
                     <div className="relative h-52 mb-5">
-                      <img
+                      <Image
                         src={game.background_image}
                         alt={game.name}
-                        className="w-full h-full object-cover rounded-lg"
+                        fill
+                        objectFit="cover"
+                        className="rounded-lg"
                       />
                     </div>
                     <h2 className="text-xl text-white font-bold">{game.name}</h2>

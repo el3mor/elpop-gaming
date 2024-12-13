@@ -11,7 +11,7 @@ import { Pagination, Autoplay } from 'swiper/modules';
 import { FaHeart } from "react-icons/fa";
 import { useWishlist } from '../../context/WishlistContext';
 import GamePageSkeleton from '@/app/components/GamePageSkeleton';
-
+import Image from 'next/image';
 
 
 interface Game {
@@ -23,6 +23,12 @@ interface Game {
   released: string,
   publishers: [
     {
+      name: string
+    }
+  ],
+  genres: [
+    {
+      id: string,
       name: string
     }
   ]
@@ -90,13 +96,15 @@ const Page = () => {
         >
           {screenshots.map((screenshot: Screenshot) => (
             <SwiperSlide key={screenshot.id}>
-              <img src={screenshot.image} className='w-full h-[30rem] rounded-lg' />
+              <div className='relative w-full h-[30rem]'>
+              <Image alt={screenshot.id} src={screenshot.image} fill className=' rounded-lg' />
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>
         <div className='mt-4 flex flex-row justify-between'>
           <div>
-            {game?.genres.map((genre: any) => (
+            {game?.genres.map((genre: { id: string, name: string }) => (
               <span key={genre.id} className='text-white px-4 py-2 bg-black/70 rounded-full text-[12px]'>{genre.name}</span>
             ))}
           </div>
@@ -104,7 +112,7 @@ const Page = () => {
             <FaHeart
               size={24}
               onClick={() => setWishlist(
-                (oldGames: any) =>
+                (oldGames: Game[]) =>
                   oldGames.some((item: { id: string | undefined }) => item.id === game?.id)
                     ? oldGames.filter((item: { id: string | undefined }) => item.id !== game?.id)
                     : [...oldGames, game]
