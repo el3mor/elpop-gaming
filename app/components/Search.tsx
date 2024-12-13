@@ -10,7 +10,13 @@ import { useWishlist } from '../context/WishlistContext';
 const Search = () => {
   const [search, setSearch] = useState('')
   const inputRef = useRef<HTMLInputElement>(null);
-  const [searchGame, setSearchGame] = useState<any>([])
+  interface Game {
+    id: number;
+    name: string;
+    background_image: string;
+  }
+
+  const [searchGame, setSearchGame] = useState<Game[]>([])
   const {setWishlist} = useWishlist()
   useEffect(() => {
     const storedWishlist = localStorage.getItem('wishlist');
@@ -36,7 +42,7 @@ const Search = () => {
 
    {search.length > 0 && searchGame.length > 0 &&  <div className="absolute z-10 max-h-96 md:w-[40%] bg-[#333839] p-5 rounded-xl overflow-y-auto ">
     {
-      search.length > 0 && searchGame.length > 0 && searchGame.map((game: any) => (
+      search.length > 0 && searchGame.length > 0 && searchGame.map((game: Game) => (
         <Link href={`/games/${game.id}`} key={game.id} className='flex items-center gap-2 my-3 rounded-2xl p-3 hover:bg-rose-400'>
           <div className="rounded-2xl relative overflow-hidden w-[40%] bg-neutral-900 h-20">
             <Image src={game.background_image} layout='fill' className='object-cover' alt={game.name} />

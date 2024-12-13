@@ -10,7 +10,7 @@ import GameSlider from '../GameSlider';
 
 type Props = {
   title: string,
-  games: any[]
+  games: { id: number; title: string; imageUrl: string; name: string; background_image: string }[]
 }
 
 const GamesSlider = ({title, games}: Props) => {

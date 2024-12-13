@@ -1,30 +1,52 @@
-"use client";
-import {createContext, useContext, useState} from 'react';
+"use client"
+import React from "react";
 
+interface Game {
 
+  name: string;
 
-interface WishlistContextType {
-  wishlist: any[];
-  setWishlist: React.Dispatch<React.SetStateAction<any[]>>;
+  background_image: string;
+
+  id: number;
+
 }
 
-const WishlistContext = createContext<WishlistContextType | undefined>(undefined);
 
-import { ReactNode } from 'react';
 
-export const WishlistProvider = ({children}: {children: ReactNode}) => {
-  const [wishlist, setWishlist] = useState<any[]>([])
+const WishlistContext = React.createContext<{ wishlist: Game[]; setWishlist: React.Dispatch<React.SetStateAction<Game[]>> } | undefined>(undefined);
+
+
+
+export const WishlistProvider = ({ children }: { children: React.ReactNode }) => {
+
+  const [wishlist, setWishlist] = React.useState<Game[]>([]);
+
+
+
   return (
-    <WishlistContext.Provider value={{wishlist, setWishlist}}>
+
+    <WishlistContext.Provider value={{ wishlist, setWishlist }}>
+
       {children}
+
     </WishlistContext.Provider>
-  )
-}
+
+  );
+
+};
+
+
 
 export const useWishlist = () => {
-  const context = useContext(WishlistContext)
-  if (!context) {
-    throw new Error('useWishlist must be used within a WishlistProvider')
+
+  const context = React.useContext(WishlistContext);
+
+  if (context === undefined) {
+
+    throw new Error('useWishlist must be used within a WishlistProvider');
+
   }
-  return context
-}
+
+  return context;
+
+};

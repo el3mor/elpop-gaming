@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
 import Image from 'next/image';
 import Link from 'next/link'
@@ -15,7 +15,7 @@ interface Game {
 }
 
 const GameSlider = ({game}: { game: Game }) => {
-  const {wishlist ,setWishlist} = useWishlist()
+  const {wishlist, setWishlist} = useWishlist() as { wishlist: Game[], setWishlist: React.Dispatch<React.SetStateAction<Game[]>> };
   
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -32,7 +32,7 @@ const GameSlider = ({game}: { game: Game }) => {
   return (
     <div className="relative group">
      
-    {wishlist.some((item) => item.id === id) ? (
+    {wishlist.some((item) => Number(item?.id) === id) ? (
     <XIcon 
         onClick={() => setWishlist((oldGames) => oldGames.filter((item) => item.id !== id))} 
         className="duration-700 z-10 absolute top-2 right-4 text-white w-7 h-7 hover:bg-transparent hover:text-rose-500 bg-rose-500 p-2 rounded-full cursor-pointer" 
